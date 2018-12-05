@@ -107,6 +107,8 @@ type
   procedure mp_set_memory_functions (f1: palloc_func; f2: preallocate_func; f3: pfree_proc); cdecl; external LIBGMP name '__gmp_set_memory_functions';
   procedure mp_get_memory_functions (f1: palloc_func; f2: preallocate_func; f3: pfree_proc); cdecl; external LIBGMP name '__gmp_get_memory_functions';
 
+  function bits_per_limb: valuint;
+
   {$include mpz.inc}
   {$include mpq.inc}
   {$include mpf.inc}
@@ -115,6 +117,16 @@ type
   {$include random.inc}
 
 implementation
+
+function bits_per_limb: valuint;
+begin
+{$ifdef CPU64}
+  Result:=64;
+{$endif CPU64}
+{$ifdef CPU32}
+  Result:=32;
+{$endif CPU32}
+end;
 
 function mpz_sgn(op: mpz_t): integer;
 begin
