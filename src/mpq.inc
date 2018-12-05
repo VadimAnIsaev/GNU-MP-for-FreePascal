@@ -1,3 +1,5 @@
+{ Included file with multiprecision rational number processing functions }
+
 procedure mpq_abs(rop: mpq_ptr; const p1: mpq_ptr); cdecl; external LIBGMP name '__gmpq_abs';
 procedure mpq_add(rop: mpq_ptr; const p1: mpq_ptr; const p2: mpq_ptr); cdecl; external LIBGMP name '__gmpq_add';
 procedure mpq_canonicalize(rop: mpq_ptr); cdecl; external LIBGMP name '__gmpq_canonicalize';

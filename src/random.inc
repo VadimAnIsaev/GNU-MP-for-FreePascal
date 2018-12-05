@@ -1,3 +1,5 @@
+{ Included file with random number functions }
+
 procedure gmp_randinit_default(rop: gmp_randstate_t); cdecl; external LIBGMP name '__gmp_randinit_default';
 procedure gmp_randinit_lc_2exp(rop: gmp_randstate_t; const p1: mpz_ptr; p2: valuint; p3: mp_bitcnt_t); cdecl; external LIBGMP name '__gmp_randinit_lc_2exp';
 function gmp_randinit_lc_2exp_size(rop: gmp_randstate_t; p1: mp_bitcnt_t): integer; cdecl; external LIBGMP name '__gmp_randinit_lc_2exp_size';

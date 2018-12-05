@@ -1,3 +1,15 @@
+{
+    An header for the GMP library
+    Copyright (c) 2018 by Vadim Isaev
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+}
+
+{$mode objfpc}{$h+}
+{$packrecords c}
+
 Unit gmp;
 
 interface
@@ -24,7 +36,6 @@ const
   __GNU_MP_VERSION_MINOR      = 1;
   __GNU_MP_VERSION_PATCHLEVEL = 2;
   __GNU_MP_RELEASE            = __GNU_MP_VERSION * 10000 + __GNU_MP_VERSION_MINOR * 100 + __GNU_MP_VERSION_PATCHLEVEL;
-
 
 type
 {  gmp_randalg_t = ( GMP_RAND_ALG_DEFAULT = 0, 
@@ -84,15 +95,17 @@ type
   randstate_ptr = ^gmp_randstate_t;
 
   { Return a pointer to newly allocated space with at least alloc size bytes }
-  alloc_func_t = function(alloc_size: sizeuint): pointer; cdecl;
+  alloc_func_t = procedure(alloc_size: sizeuint); cdecl;
   palloc_func = ^alloc_func_t;
   { Resize a previously allocated block ptr of old size bytes to be new size bytes }
-  reallocate_func_t = function(p: pointer; old_size, new_size: sizeuint): pointer; cdecl;
+  reallocate_func_t = procedure(p: pointer; old_size, new_size: sizeuint); cdecl;
   preallocate_func = ^reallocate_func_t;
   { De-allocate the space pointed to by ptr }
   free_proc_t = procedure(p: pointer; size: sizeuint); cdecl;
   pfree_proc = ^free_proc_t;
   
+  procedure mp_set_memory_functions (f1: palloc_func; f2: preallocate_func; f3: pfree_proc); cdecl; external LIBGMP name '__gmp_set_memory_functions';
+  procedure mp_get_memory_functions (f1: palloc_func; f2: preallocate_func; f3: pfree_proc); cdecl; external LIBGMP name '__gmp_get_memory_functions';
 
   {$include mpz.inc}
   {$include mpq.inc}

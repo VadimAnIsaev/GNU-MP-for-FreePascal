@@ -1,3 +1,5 @@
+{ Included file with low level functions }
+
 function mpn_add(rop: mp_ptr; const p1: mp_ptr; p2: mp_size_t; const p3: mp_ptr; p4: mp_size_t): mp_limb_t; cdecl; external LIBGMP name '__gmpn_add';
 function mpn_add_1(rop: mp_ptr; const p1: mp_ptr; p2: mp_size_t; p3: mp_limb_t): mp_limb_t; cdecl; external LIBGMP name '__gmpn_add_1';
 function mpn_add_n(rop: mp_ptr; const p1: mp_ptr; const p2: mp_ptr; p3: mp_size_t): mp_limb_t; cdecl; external LIBGMP name '__gmpn_add_n';

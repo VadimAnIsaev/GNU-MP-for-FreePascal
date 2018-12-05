@@ -1,3 +1,5 @@
+{ Included file with real number functions }
+
 procedure mpf_abs(rop: mpf_ptr; const p1: mpf_ptr); cdecl; external LIBGMP name '__gmpf_abs';
 procedure mpf_add(rop: mpf_ptr; const p1: mpf_ptr; const p2: mpf_ptr); cdecl; external LIBGMP name '__gmpf_add';
 procedure mpf_add_ui(rop: mpf_ptr; const p1: mpf_ptr; p2: valuint); cdecl; external LIBGMP name '__gmpf_add_ui';

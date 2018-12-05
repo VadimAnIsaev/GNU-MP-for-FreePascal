@@ -1,3 +1,5 @@
+{ Included file with integer functions }
+
 procedure mpz_realloc(rop: mpz_ptr; p1: mp_size_t); cdecl; external LIBGMP name '__gmpz_realloc';
 procedure mpz_abs(rop: mpz_ptr; const p1: mpz_ptr); cdecl; external LIBGMP name '__gmpz_abs';
 procedure mpz_add(rop: mpz_ptr; const p1: mpz_ptr; const p2: mpz_ptr); cdecl; external LIBGMP name '__gmpz_add';
