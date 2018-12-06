@@ -1,10 +1,10 @@
-{ Included file with multiprecision rational number processing functions }
+{ Included file with rational number functions }
 
 procedure mpq_abs(rop: mpq_ptr; const p1: mpq_ptr); cdecl; external LIBGMP name '__gmpq_abs';
 procedure mpq_add(rop: mpq_ptr; const p1: mpq_ptr; const p2: mpq_ptr); cdecl; external LIBGMP name '__gmpq_add';
 procedure mpq_canonicalize(rop: mpq_ptr); cdecl; external LIBGMP name '__gmpq_canonicalize';
 procedure mpq_clear(rop: mpq_ptr); cdecl; external LIBGMP name '__gmpq_clear';
-procedure mpq_clears(rop: mpq_ptr); cdecl; varargs; external LIBGMP name '__gmpq_clears';
+procedure mpq_clears(rop: mpq_ptr{; ...}); cdecl; varargs; external LIBGMP name '__gmpq_clears';
 function mpq_cmp(const rop: mpq_ptr; const p1: mpq_ptr): integer; cdecl; external LIBGMP name '__gmpq_cmp';
 function mpq_cmp_si(const rop: mpq_ptr; p1: valsint; p2: valuint): integer; cdecl; external LIBGMP name '__gmpq_cmp_si';
 function mpq_cmp_ui(const rop: mpq_ptr; p1: valuint; p2: valuint): integer; cdecl; external LIBGMP name '__gmpq_cmp_ui';
@@ -17,7 +17,7 @@ procedure mpq_get_den(rop: mpz_ptr; const p1: mpq_ptr); cdecl; external LIBGMP n
 function mpq_get_d(const rop: mpq_ptr): double; cdecl; external LIBGMP name '__gmpq_get_d';
 function mpq_get_str(rop: PChar; p1: integer; const p2: mpq_ptr): PChar; cdecl; external LIBGMP name '__gmpq_get_str';
 procedure mpq_init(rop: mpq_ptr); cdecl; external LIBGMP name '__gmpq_init';
-procedure mpq_inits(rop: mpq_ptr); cdecl; varargs; external LIBGMP name '__gmpq_inits';
+procedure mpq_inits(rop: mpq_ptr{; ...}); cdecl; varargs; external LIBGMP name '__gmpq_inits';
 procedure mpq_inv(rop: mpq_ptr; const p1: mpq_ptr); cdecl; external LIBGMP name '__gmpq_inv';
 procedure mpq_mul(rop: mpq_ptr; const p1: mpq_ptr; const p2: mpq_ptr); cdecl; external LIBGMP name '__gmpq_mul';
 procedure mpq_mul_2exp(rop: mpq_ptr; const p1: mpq_ptr; p2: mp_bitcnt_t); cdecl; external LIBGMP name '__gmpq_mul_2exp';

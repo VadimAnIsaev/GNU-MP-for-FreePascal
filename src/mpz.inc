@@ -20,7 +20,7 @@ procedure mpz_cdiv_r_2exp(rop: mpz_ptr; const p1: mpz_ptr; p2: mp_bitcnt_t); cde
 function mpz_cdiv_r_ui(rop: mpz_ptr; const p1: mpz_ptr; p2: valuint): valuint; cdecl; external LIBGMP name '__gmpz_cdiv_r_ui';
 function mpz_cdiv_ui(const rop: mpz_ptr; p1: valuint): valuint; cdecl; external LIBGMP name '__gmpz_cdiv_ui';
 procedure mpz_clear(rop: mpz_ptr); cdecl; external LIBGMP name '__gmpz_clear';
-procedure mpz_clears(rop: mpz_ptr); cdecl; varargs; external LIBGMP name '__gmpz_clears';
+procedure mpz_clears(rop: mpz_ptr{; ...}); cdecl; varargs; external LIBGMP name '__gmpz_clears';
 procedure mpz_clrbit(rop: mpz_ptr; p1: mp_bitcnt_t); cdecl; external LIBGMP name '__gmpz_clrbit';
 function mpz_cmp(const rop: mpz_ptr; const p1: mpz_ptr): integer; cdecl; external LIBGMP name '__gmpz_cmp';
 function mpz_cmp_d(const rop: mpz_ptr; p1: double): integer; cdecl; external LIBGMP name '__gmpz_cmp_d';
@@ -75,7 +75,7 @@ function mpz_hamdist(const rop: mpz_ptr; const p1: mpz_ptr): mp_bitcnt_t; cdecl;
 procedure mpz_import(rop: mpz_ptr; p1: valuint; p2: integer; p3: valuint; p4: integer; p5: valuint; p6: pointer); cdecl; external LIBGMP name '__gmpz_import';
 procedure mpz_init(rop: mpz_ptr); cdecl; external LIBGMP name '__gmpz_init';
 procedure mpz_init2(rop: mpz_ptr; p1: mp_bitcnt_t); cdecl; external LIBGMP name '__gmpz_init2';
-procedure mpz_inits(rop: mpz_ptr); cdecl; varargs; external LIBGMP name '__gmpz_inits';
+procedure mpz_inits(rop: mpz_ptr{; ...}); cdecl; varargs; external LIBGMP name '__gmpz_inits';
 procedure mpz_init_set(rop: mpz_ptr; const p1: mpz_ptr); cdecl; external LIBGMP name '__gmpz_init_set';
 procedure mpz_init_set_d(rop: mpz_ptr; p1: double); cdecl; external LIBGMP name '__gmpz_init_set_d';
 procedure mpz_init_set_si(rop: mpz_ptr; p1: valsint); cdecl; external LIBGMP name '__gmpz_init_set_si';
