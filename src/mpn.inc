@@ -8,7 +8,7 @@ function mpn_cmp(const rop: mp_ptr; const p1: mp_ptr; p2: mp_size_t): integer; c
 function mpn_zero_p(const rop: mp_ptr; p1: mp_size_t): integer; cdecl; external LIBGMP name '__gmpn_zero_p';
 procedure mpn_divexact_1(rop: mp_ptr; const p1: mp_ptr; p2: mp_size_t; p3: mp_limb_t); cdecl; external LIBGMP name '__gmpn_divexact_1';
 function mpn_divexact_by3c(rop: mp_ptr; const p1: mp_ptr; p2: mp_size_t; p3: mp_limb_t): mp_limb_t; cdecl; external LIBGMP name '__gmpn_divexact_by3c';
-function mpn_divrem(rop: mp_ptr; p1: mp_size_t; p2: mp_ptr; p3: mp_size_t; const p4: mp_ptr; p5: mp_size_t): mp_limb_t; cdecl; external LIBGMP name '__gmpn_divrem';
+function mpn_divrem(rop: mp_ptr; p1: mp_size_t; p2: mp_ptr; p3: mp_size_t; const p4: mp_ptr; p5: mp_size_t): mp_limb_t; cdecl; external LIBGMP name '__gmpn_divrem'; deprecated 'Use  mpn_tdiv_qr';
 function mpn_divrem_1(rop: mp_ptr; p1: mp_size_t; const p2: mp_ptr; p3: mp_size_t; p4: mp_limb_t): mp_limb_t; cdecl; external LIBGMP name '__gmpn_divrem_1';
 function mpn_divrem_2(rop: mp_ptr; p1: mp_size_t; p2: mp_ptr; p3: mp_size_t; const p4: mp_ptr): mp_limb_t; cdecl; external LIBGMP name '__gmpn_divrem_2';
 function mpn_div_qr_1(rop: mp_ptr; p1: mp_ptr; const p2: mp_ptr; p3: mp_size_t; p4: mp_limb_t): mp_limb_t; cdecl; external LIBGMP name '__gmpn_div_qr_1';
