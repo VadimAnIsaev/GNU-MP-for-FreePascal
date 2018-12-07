@@ -60,8 +60,8 @@ type
 
   { multi precision integer number record }
   mpz_t = record
-    alloc: longint;
-    size : longint;
+    alloc: integer;
+    size : integer;
     data : mp_ptr;
   end;
   mpz_ptr = ^mpz_t;
@@ -75,8 +75,8 @@ type
 
   { multi precision real number record }
   mpf_t = record
-    prec: longint;
-    size: longint;
+    prec: integer;
+    size: integer;
     exp : mp_exp_t;
     data: mp_ptr;
   end;
@@ -84,7 +84,7 @@ type
 
   gmp_randstate_t = record
     seed   : mpz_t;
-    alg    : randalg_t;
+    alg    : gmp_randalg_t;      // Currently unused. 
     algdata: record
       case longint of
         0 : (lc : pointer);
