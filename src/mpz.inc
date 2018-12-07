@@ -108,8 +108,8 @@ procedure mpz_powm(rop: mpz_ptr; const p1: mpz_ptr; const p2: mpz_ptr; const p3:
 procedure mpz_powm_sec(rop: mpz_ptr; const p1: mpz_ptr; const p2: mpz_ptr; const p3: mpz_ptr); cdecl; external LIBGMP name '__gmpz_powm_sec';
 procedure mpz_powm_ui(rop: mpz_ptr; const p1: mpz_ptr; p2: valuint; const p3: mpz_ptr); cdecl; external LIBGMP name '__gmpz_powm_ui';
 function mpz_probab_prime_p(const rop: mpz_ptr; p1: integer): integer; cdecl; external LIBGMP name '__gmpz_probab_prime_p';
-procedure mpz_random(rop: mpz_ptr; p1: mp_size_t); cdecl; external LIBGMP name '__gmpz_random';
-procedure mpz_random2(rop: mpz_ptr; p1: mp_size_t); cdecl; external LIBGMP name '__gmpz_random2';
+procedure mpz_random(rop: mpz_ptr; p1: mp_size_t); cdecl; external LIBGMP name '__gmpz_random'; deprecated 'Use mpz_urandomb';
+procedure mpz_random2(rop: mpz_ptr; p1: mp_size_t); cdecl; external LIBGMP name '__gmpz_random2'; deprecated 'Use mpz_rrandomb';
 procedure mpz_realloc2(rop: mpz_ptr; p1: mp_bitcnt_t); cdecl; external LIBGMP name '__gmpz_realloc2';
 function mpz_remove(rop: mpz_ptr; const p1: mpz_ptr; const p2: mpz_ptr): mp_bitcnt_t; cdecl; external LIBGMP name '__gmpz_remove';
 function mpz_root(rop: mpz_ptr; const p1: mpz_ptr; p2: valuint): integer; cdecl; external LIBGMP name '__gmpz_root';
