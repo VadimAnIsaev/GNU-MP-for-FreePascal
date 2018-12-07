@@ -7,7 +7,6 @@ procedure mpz_add_ui(rop: mpz_ptr; const p1: mpz_ptr; p2: valuint); cdecl; exter
 procedure mpz_addmul(rop: mpz_ptr; const p1: mpz_ptr; const p2: mpz_ptr); cdecl; external LIBGMP name '__gmpz_addmul';
 procedure mpz_addmul_ui(rop: mpz_ptr; const p1: mpz_ptr; p2: valuint); cdecl; external LIBGMP name '__gmpz_addmul_ui';
 procedure mpz_and(rop: mpz_ptr; const p1: mpz_ptr; const p2: mpz_ptr); cdecl; external LIBGMP name '__gmpz_and';
-procedure mpz_array_init(rop: mpz_ptr; p1: mp_size_t; p2: mp_size_t); cdecl; external LIBGMP name '__gmpz_array_init';
 procedure mpz_bin_ui(rop: mpz_ptr; const p1: mpz_ptr; p2: valuint); cdecl; external LIBGMP name '__gmpz_bin_ui';
 procedure mpz_bin_uiui(rop: mpz_ptr; p1: valuint; p2: valuint); cdecl; external LIBGMP name '__gmpz_bin_uiui';
 procedure mpz_cdiv_q(rop: mpz_ptr; const p1: mpz_ptr; const p2: mpz_ptr); cdecl; external LIBGMP name '__gmpz_cdiv_q';
