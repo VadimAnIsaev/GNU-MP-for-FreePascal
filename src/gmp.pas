@@ -28,8 +28,8 @@ const
   ERROR_SQRT_OF_NEGATIVE     = 4;
   ERROR_INVALID_ARGUMENT     = 8;
   
-  RAND_ALG_DEFAULT           = 0;
-  RAND_ALG_LC                = RAND_ALG_DEFAULT;
+//  GMP_RAND_ALG_DEFAULT           = 0;
+//  GMP_RAND_ALG_LC                = GMP_RAND_ALG_DEFAULT;
 
 // Major version number is the value of __GNU_MP__ too, above.
   __GNU_MP_VERSION            = 6;
@@ -38,10 +38,10 @@ const
   __GNU_MP_RELEASE            = __GNU_MP_VERSION * 10000 + __GNU_MP_VERSION_MINOR * 100 + __GNU_MP_VERSION_PATCHLEVEL;
 
 type
-{  gmp_randalg_t = ( GMP_RAND_ALG_DEFAULT = 0, 
+  gmp_randalg_t = ( GMP_RAND_ALG_DEFAULT = 0, 
                     GMP_RAND_ALG_LC      = GMP_RAND_ALG_DEFAULT
                   );
-}
+
   // ---- GMP types ----
 
   { low level multi precision integer atom = machine size uint }
