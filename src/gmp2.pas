@@ -137,11 +137,25 @@ procedure RescanDefaultPrec();
 // Операторы присваивания значений
 operator := (op: string): mpz_t;
 operator := (op: pchar): mpz_t;
-operator := (op: longword): mpz_t;
-operator := (op: integer): mpz_t;
+operator := (op: valuint): mpz_t;
+operator := (op: valsint): mpz_t;
 operator := (op: double): mpz_t;
 operator := (op: mpf_t): mpz_t;
 operator := (op: mpq_t): mpz_t;
+
+// Arithmetic operators
+// Арифметические операторы
+operator + (op1: mpz_t; op2: mpz_t): mpz_t;
+operator + (op1: mpz_t; op2: valuint): mpz_t;
+operator + (op1: valuint; op2: mpz_t): mpz_t;
+operator - (op1: mpz_t; op2: mpz_t): mpz_t;
+operator - (op1: mpz_t; op2: valuint): mpz_t;
+operator - (op1: valuint; op2: mpz_t): mpz_t;
+operator * (op1: mpz_t; op2: mpz_t): mpz_t;
+operator * (op1: mpz_t; op2: valuint): mpz_t;
+operator * (op1: valuint; op2: mpz_t): mpz_t;
+operator / (op1: mpz_t; op2: mpz_t): mpz_t;
+operator / (op1: mpz_t; op2: valuint): mpz_t;
 
 // Comparison operators
 // Операторы сравнения
@@ -177,6 +191,13 @@ function abs(op: mpz_t): mpz_t;
 operator := (op: string): mpq_t;
 operator := (op: pchar): mpq_t;
 operator := (op: mpz_t): mpq_t;
+
+// Arithmetic operators
+// Арифметические операторы
+operator +  (op1: mpq_t; op2: mpq_t): mpq_t;
+operator -  (op1: mpq_t; op2: mpq_t): mpq_t;
+operator *  (op1: mpq_t; op2: mpq_t): mpq_t;
+operator /  (op1: mpq_t; op2: mpq_t): mpq_t;
 
 // Comparison operators
 // Операторы сравнения
@@ -545,13 +566,13 @@ begin
   mpz_set_str(@result, op, 0);
 end;
 
-operator := (op: longword): mpz_t;
+operator := (op: valuint): mpz_t;
 begin
   result := TmpResult_z;
   mpz_set_ui(@result, op);
 end;
 
-operator := (op: integer): mpz_t;
+operator := (op: valsint): mpz_t;
 begin
   result := TmpResult_z;
   mpz_set_si(@result, op);
@@ -574,6 +595,75 @@ begin
   result:=TmpResult_z;
   mpz_set_q(@result, @op);
 end;
+
+// Arithmetic operators
+// Арифметические операторы
+operator + (op1: mpz_t; op2: mpz_t): mpz_t;
+begin
+  result:=TmpResult_z;
+  mpz_add(@result, @op1, @op2);
+end;
+
+operator + (op1: mpz_t; op2: valuint): mpz_t;
+begin
+  result:=TmpResult_z;
+  mpz_add_ui(@result, @op1, op2);
+end;
+
+operator + (op1: valuint; op2: mpz_t): mpz_t;
+begin
+  result:=TmpResult_z;
+  mpz_add_ui(@result, @op2, op1);
+end;
+
+operator - (op1: mpz_t; op2: mpz_t): mpz_t;
+begin
+  result:=TmpResult_z;
+  mpz_sub(@result, @op1, @op2);
+end;
+
+operator - (op1: mpz_t; op2: valuint): mpz_t;
+begin
+  result:=TmpResult_z;
+  mpz_sub_ui(@result, @op1, op2);
+end;
+
+operator - (op1: valuint; op2: mpz_t): mpz_t;
+begin
+  result:=TmpResult_z;
+  mpz_ui_sub(@result, op1, @op2);
+end;
+
+operator *  (op1: mpz_t; op2: mpz_t): mpz_t;
+begin
+  result:=TmpResult_z;
+  mpz_mul(@result, @op1, @op2);
+end;
+
+operator *  (op1: mpz_t; op2: valuint): mpz_t;
+begin
+  result:=TmpResult_z;
+  mpz_mul_ui(@result, @op1, op2);
+end;
+
+operator *  (op1: valuint; op2: mpz_t): mpz_t;
+begin
+  result:=TmpResult_z;
+  mpz_mul_ui(@result, @op2, op1);
+end;
+
+operator /  (op1: mpz_t; op2: mpz_t): mpz_t;
+begin
+  result:=TmpResult_z;
+  mpz_tdiv_q(@result, @op1, @op2);
+end;
+
+operator /  (op1: mpz_t; op2: valuint): mpz_t;
+begin
+  result:=TmpResult_z;
+  mpz_tdiv_q_ui(@result, @op1, op2);
+end;
+
 
 {------ Корень квадратный ---------------------------}
 function sqrt(op: mpz_t): mpz_t;
@@ -662,6 +752,33 @@ begin
   result:=TmpResult_q;
   mpq_set_z(@result, @op);
 end;
+
+// Arithmetic operators
+// Арифметические операторы
+operator + (op1: mpq_t; op2: mpq_t): mpq_t;
+begin
+  result:=TmpResult_q;
+  mpq_add(@result, @op1, @op2);
+end;
+
+operator - (op1: mpq_t; op2: mpq_t): mpq_t;
+begin
+  result:=TmpResult_q;
+  mpq_sub(@result, @op1, @op2);
+end;
+
+operator * (op1: mpq_t; op2: mpq_t): mpq_t;
+begin
+  result:=TmpResult_q;
+  mpq_mul(@result, @op1, @op2);
+end;
+
+operator / (op1: mpq_t; op2: mpq_t): mpq_t;
+begin
+  result:=TmpResult_q;
+  mpq_div(@result, @op1, @op2);
+end;
+
 
 {------ Сравнение ------------------------------------}
 operator = (op1: mpq_t; op2: mpq_t): boolean;
