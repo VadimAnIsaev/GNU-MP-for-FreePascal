@@ -39,11 +39,26 @@ Type
 // Операторы присваивания значений
 operator := (op: AnsiString): mpf_t;
 operator := (op: pchar): mpf_t;
-operator := (op: longword): mpf_t;
-operator := (op: integer): mpf_t;
+operator := (op: valuint): mpf_t;
+operator := (op: valsint): mpf_t;
 operator := (op: double): mpf_t;
 operator := (op: mpq_t): mpf_t;
 operator := (op: mpz_t): mpf_t;
+
+// Arithmetic operators
+// Арифетические операторы
+operator + (op1: mpf_t; op2: mpf_t): mpf_t;
+operator + (op1: mpf_t; op2: valuint): mpf_t;
+operator + (op1: valuint; op2: mpf_t): mpf_t;
+operator - (op1: mpf_t; op2: mpf_t): mpf_t;
+operator - (op1: mpf_t; op2: valuint): mpf_t;
+operator - (op1: valuint; op2: mpf_t): mpf_t;
+operator * (op1: mpf_t; op2: mpf_t): mpf_t;
+operator * (op1: mpf_t; op2: valuint): mpf_t;
+operator * (op1: valuint; op2: mpq_t): mpf_t;
+operator / (op1: mpf_t; op2: mpf_t): mpf_t;
+operator / (op1: mpf_t; op2: valuint): mpf_t;
+operator / (op1: valuint; op2: mpq_t): mpf_t;
 
 // The square root
 // Функция извлечения кв. корня
@@ -91,7 +106,7 @@ function GetDigits(prec: LongWord): longWord;
 
 // The maximum possible digits in number
 // Максимально возможное количество разрядов числа
-function mpg_GetMaxDigits(op: mpf_t): LongWord;
+function GetMaxDigits(op: mpf_t): LongWord;
 
 // The number of bits by the digits.
 // The result is rounded to the nearest 
@@ -100,6 +115,13 @@ function mpg_GetMaxDigits(op: mpf_t): LongWord;
 // Результат округляется до ближайшего большего
 // целого кол-ва лимбов
 function GetPrec(digits: LongWord): valuint;
+
+// Если изменилась величина хранилища
+// в основной программе, эта процедура
+// процедура заносит это значение
+// во временные переменные ответов
+// для функций операций
+procedure RescanDefaultPrec();
 
 {--------------------------------------------
  Integers
@@ -129,6 +151,9 @@ operator >  (op1: mpz_t; op2: mpz_t): boolean;
 operator <  (op1: mpz_t; op2: mpz_t): boolean;
 operator >= (op1: mpz_t; op2: mpz_t): boolean;
 operator <= (op1: mpz_t; op2: mpz_t): boolean;
+
+// Целочисленное деление
+operator div (op1: mpz_t; op2: mpz_t): mpz_t;
 
 {*********************************************************
  Functions
@@ -200,14 +225,14 @@ begin
   mpf_set_str(@result, op, 0);
 end;
 
-operator := (op: longword): mpf_t;
+operator := (op: valuint): mpf_t;
 begin
   result := TmpResult_f;
   mpf_set_prec(@result, mpf_get_default_prec());
   mpf_set_ui(@result, op);
 end;
 
-operator := (op: integer): mpf_t;
+operator := (op: valsint): mpf_t;
 begin
   result := TmpResult_f;
   mpf_set_prec(@result, mpf_get_default_prec());
@@ -234,6 +259,137 @@ begin
   mpf_set_prec(@result, mpf_get_default_prec());
   mpf_set_q(@result, @op);
 end;
+
+// Arithmetic operators
+// Арифетические операторы
+operator + (op1: mpf_t; op2: mpf_t): mpf_t;
+Var
+  prec, prec1, prec2: mp_bitcnt_t;
+begin
+  prec:=mpf_get_prec(@TmpResult_f);
+  prec1:=mpf_get_prec(@op1);
+  prec2:=mpf_get_prec(@op2);
+  If (prec<prec1) or (prec<prec2) Then
+  Begin  
+    If prec1 < prec2 Then
+      prec:=prec2
+    Else
+      prec:=prec1;
+    mpf_set_prec(@TmpResult_f, prec);
+  End;
+  result:=TmpResult_f;
+  
+  mpf_add(@result, @op1, @op2);
+end;
+
+operator + (op1: mpf_t; op2: valuint): mpf_t;
+begin
+  result:=TmpResult_f;
+  mpf_add_ui(@result, @op1, op2);
+end;
+
+operator + (op1: valuint; op2: mpf_t): mpf_t;
+begin
+  result:=TmpResult_f;
+  mpf_add_ui(@result, @op2, op1);
+end;
+
+operator - (op1: mpf_t; op2: mpf_t): mpf_t;
+Var
+  prec, prec1, prec2: mp_bitcnt_t;
+begin
+  prec:=mpf_get_prec(@TmpResult_f);
+  prec1:=mpf_get_prec(@op1);
+  prec2:=mpf_get_prec(@op2);
+  If (prec<prec1) or (prec<prec2) Then
+  Begin  
+    If prec1 < prec2 Then
+      prec:=prec2
+    Else
+      prec:=prec1;
+    mpf_set_prec(@TmpResult_f, prec);
+  End;
+  result:=TmpResult_f;
+  
+  mpf_sub(@result, @op1, @op2);
+end;
+
+operator - (op1: mpf_t; op2: valuint): mpf_t;
+begin
+  result:=TmpResult_f;
+  mpf_sub_ui(@result, @op1, op2);
+end;
+
+operator - (op1: valuint; op2: mpf_t): mpf_t;
+begin
+  result:=TmpResult_f;
+  mpf_ui_sub(@result, op1, @op2);
+end;
+
+operator * (op1: mpf_t; op2: mpf_t): mpf_t;
+Var
+  prec, prec1, prec2: mp_bitcnt_t;
+begin
+  prec:=mpf_get_prec(@TmpResult_f);
+  prec1:=mpf_get_prec(@op1);
+  prec2:=mpf_get_prec(@op2);
+  If (prec<prec1) or (prec<prec2) Then
+  Begin  
+    If prec1 < prec2 Then
+      prec:=prec2
+    Else
+      prec:=prec1;
+    mpf_set_prec(@TmpResult_f, prec);
+  End;
+  result:=TmpResult_f;
+  
+  mpf_mul(@result, @op1, @op2);
+end;
+
+operator * (op1: mpf_t; op2: valuint): mpf_t;
+begin
+  result:=TmpResult_f;
+  mpf_mul_ui(@result, @op1, op2);
+end;
+
+operator * (op1: valuint; op2: mpq_t): mpf_t;
+begin
+  result:=TmpResult_f;
+  mpf_sub_ui(@result, @op2, op1);
+end;
+
+operator / (op1: mpf_t; op2: mpf_t): mpf_t;
+Var
+  prec, prec1, prec2: mp_bitcnt_t;
+begin
+  prec:=mpf_get_prec(@TmpResult_f);
+  prec1:=mpf_get_prec(@op1);
+  prec2:=mpf_get_prec(@op2);
+  If (prec<prec1) or (prec<prec2) Then
+  Begin  
+    If prec1 < prec2 Then
+      prec:=prec2
+    Else
+      prec:=prec1;
+    mpf_set_prec(@TmpResult_f, prec);
+  End;
+  result:=TmpResult_f;
+  
+  mpf_div(@result, @op1, @op2);
+end;
+
+operator / (op1: mpf_t; op2: valuint): mpf_t;
+begin
+  result:=TmpResult_f;
+  mpf_div_ui(@result, @op1, op2);
+end;
+
+operator / (op1: valuint; op2: mpq_t): mpf_t;
+begin
+  result:=TmpResult_f;
+  mpf_ui_div(@result, op1, @op2);
+end;
+
 
 {------ Корень квадратный ---------------------------}
 function sqrt(op: mpf_t): mpf_t;
@@ -352,20 +508,25 @@ begin
   result := Round(prec * LOG_10_2);
 end;
 
-function mpg_GetMaxDigits(op: mpf_t): LongWord;
+function GetMaxDigits(op: mpf_t): LongWord;
 begin
   result:=GetDigits(mpf_get_prec(@op));
 end;
 
 function GetPrec(digits: LongWord): valuint;
 Var
-  ost: LongWord;
-  bpl: LongWord;
+  ost: valuint;
+  bpl: valuint;
 begin
   result:=Round(digits/LOG_10_2);
   bpl:=bits_per_limb();
   ost:=result mod bpl;
   result:=result + bpl - ost;
+end;
+
+procedure RescanDefaultPrec();
+begin
+  mpf_set_prec(@TmpResult_f, mpf_get_default_prec());
 end;
 
 {--------------------------------------------
@@ -462,6 +623,12 @@ begin
   result:=False;
   If mpz_cmp(@op1, @op2) <= 0 Then
     result:=True;
+end;
+
+operator div (op1: mpz_t; op2: mpz_t): mpz_t;
+begin
+  result := TmpResult_z;
+  mpz_tdiv_q(@result, @op1, @op2);
 end;
 
 {*************************************************************
